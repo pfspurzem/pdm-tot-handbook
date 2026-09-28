@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDM Light Touch ToT — PDM Light Touch ToT</title>
+<meta name="description" content="Lesson handbook — mobile-friendly to read, print-ready to hand out.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&amp;family=Quicksand:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+/* PDM ToT Handbook — shared style, embedded into every generated page by
+   generate_site.py. Authored once here; do not hand-edit the generated
+   HTML files under docs/ directly, since a rebuild will overwrite them. */
+
+:root {
+  --white: #FFFFFF;
+  --blue-light: #CFE7F5;
+  --blue-medium: #5193C8;
+  --blue-dark: #21386D;
+  --blue-darkest: #0A263E;
+  --purple: #7E5AC7;
+  --red: #C76F61;
+  --green: #16CC79;
+  --ink: #16232f; /* body text: darker than blue-darkest, higher contrast on white */
+  --paper: #FFFFFF;
+  --page-bg: #F3F6F8;
+  --focus-ring: #0B5FA5;
+  --max-width: 46rem;
+  --radius: 0.5rem;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Oswald", "Quicksand", system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--blue-darkest);
+  line-height: 1.25;
+}
+
+h1 { font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem); margin: 0.4em 0 0.2em; }
+h2 {
+  font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
+  margin: 1.6em 0 0.5em;
+  padding-top: 0.6em;
+  border-top: 3px solid var(--blue-light);
+}
+h3 { font-size: clamp(1.05rem, 0.97rem + 0.3vw, 1.25rem); margin: 1.1em 0 0.4em; font-weight: 500; }
+
+p { margin: 0.6em 0; }
+a { color: var(--blue-medium); text-decoration-thickness: 2px; }
+a:hover { color: var(--blue-dark); }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.75em 1.25em;
+  z-index: 100;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.1rem;
+}
+
+.site-header {
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.9rem 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand {
+  color: var(--white);
+  text-decoration: none;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+.brand:hover { color: var(--blue-light); }
+.brand-mark { color: var(--blue-medium); }
+.brand-sub {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.75rem;
+  color: var(--blue-light);
+  font-weight: 400;
+  margin-left: 0.5em;
+}
+.back-link {
+  color: var(--blue-light);
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--white); text-decoration: underline; }
+
+main { padding: 1.5rem 1.1rem 4rem; }
+
+.subtitle {
+  color: var(--blue-dark);
+  font-size: 1.05rem;
+}
+
+.lesson-nav {
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.1rem;
+  margin: 1.25rem 0;
+}
+.lesson-nav ul { margin: 0; padding-left: 1.2rem; }
+.lesson-nav a { font-weight: 500; }
+
+.lesson-index {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.lesson-index li {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+}
+.lesson-index a {
+  display: block;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: var(--blue-dark);
+  font-weight: 500;
+}
+.lesson-index a:hover { background: var(--blue-light); }
+
+.activity {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 0.25rem 1.25rem 1.25rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 3px rgba(10, 38, 62, 0.08);
+}
+
+.content-block { margin: 1.25rem 0; }
+.content-block:first-child { margin-top: 0.75rem; }
+
+.content-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  display: block;
+}
+.content-block figure { margin: 0.75em 0; }
+.content-block figcaption {
+  font-size: 0.9rem;
+  color: var(--blue-dark);
+  margin-top: 0.4em;
+}
+.media-link a { font-weight: 500; }
+
+.facilitator-note {
+  border-left: 4px solid var(--purple);
+  padding-left: 0.9rem;
+}
+
+.callout {
+  display: flex;
+  gap: 0.7rem;
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin: 1em 0;
+}
+.callout-icon { font-size: 1.2rem; flex: none; }
+.callout-body > *:first-child { margin-top: 0; }
+.callout-body > *:last-child { margin-bottom: 0; }
+.callout-body ul, .callout-body ol { padding-left: 1.2em; }
+
+.writing-box {
+  margin: 1em 0;
+  border: 2px dashed var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem 1.4rem;
+  background: var(--white);
+}
+.writing-box-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--blue-dark);
+  margin-bottom: 0.6rem;
+}
+.writing-box-lines { min-height: 3.5rem; }
+
+.kc-questions { padding-left: 1.3rem; }
+.kc-questions > li { margin-bottom: 1.1rem; }
+.kc-options { list-style: none; padding-left: 0; margin: 0.5em 0; }
+.kc-options li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+  margin: 0.35em 0;
+}
+.option-box {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  border: 2px solid var(--blue-dark);
+  border-radius: 3px;
+}
+
+.site-footer {
+  background: var(--blue-darkest);
+  color: var(--blue-light);
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.site-footer a { color: var(--white); }
+
+/* Tablet and up */
+@media (min-width: 640px) {
+  :root { --max-width: 40rem; }
+  main { padding: 2rem 1.5rem 5rem; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  :root { --max-width: 44rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
+
+/* ---------------------------------------------------------------- */
+/* Print: same source file, print-ready output.                     */
+/* ---------------------------------------------------------------- */
+@media print {
+  .skip-link, .site-header, .site-footer, .lesson-nav, .back-link {
+    display: none !important;
+  }
+  body { background: var(--white); font-size: 11.5pt; color: #000; }
+  main { padding: 0; max-width: none; }
+  .wrap { max-width: none; padding: 0; }
+  h1, h2, h3 { color: #000; }
+  h2 { border-top-color: #ccc; page-break-after: avoid; }
+  h3 { page-break-after: avoid; }
+  .activity {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    page-break-before: always;
+  }
+  .activity:first-of-type { page-break-before: auto; }
+  .content-block { page-break-inside: avoid; }
+  .callout {
+    background: #fff;
+    border: 1px solid #999;
+    border-left: 4px solid #666;
+  }
+  .writing-box {
+    border: 1.5px dashed #666;
+  }
+  .writing-box-lines { min-height: 5rem; }
+  .option-box { border-color: #000; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+  img { max-width: 100% !important; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">〜</span> SEE change <span class="brand-sub">PDM Light Touch ToT</span></a>
+    
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>PDM Light Touch ToT</h1>
+  <p class="subtitle">Lesson handbook — mobile-friendly to read, print-ready to hand out.</p>
+  
+  <ul class="lesson-index"><li><a href="lessons/0-0-why-this-tot.html">0.0 — Why This ToT</a></li><li><a href="lessons/0-1-share-names-community-agreement.html">0.1 — Share Names &amp; Community Agreement</a></li><li><a href="lessons/0-2-my-successes-so-far-active-listening.html">0.2 — My Successes so Far &amp; Active Listening</a></li><li><a href="lessons/1-1-think-feel-do-cycle.html">1.1 — Think-Feel-Do Cycle</a></li></ul>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>SEE Change Initiative · Johns Hopkins Bloomberg School of Public Health</p>
+  </div>
+</footer>
+</body>
+</html>

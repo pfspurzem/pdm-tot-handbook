@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.1 — Think-Feel-Do Cycle — PDM Light Touch ToT</title>
+<meta name="description" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&amp;family=Quicksand:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+/* PDM ToT Handbook — shared style, embedded into every generated page by
+   generate_site.py. Authored once here; do not hand-edit the generated
+   HTML files under docs/ directly, since a rebuild will overwrite them. */
+
+:root {
+  --white: #FFFFFF;
+  --blue-light: #CFE7F5;
+  --blue-medium: #5193C8;
+  --blue-dark: #21386D;
+  --blue-darkest: #0A263E;
+  --purple: #7E5AC7;
+  --red: #C76F61;
+  --green: #16CC79;
+  --ink: #16232f; /* body text: darker than blue-darkest, higher contrast on white */
+  --paper: #FFFFFF;
+  --page-bg: #F3F6F8;
+  --focus-ring: #0B5FA5;
+  --max-width: 46rem;
+  --radius: 0.5rem;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Oswald", "Quicksand", system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--blue-darkest);
+  line-height: 1.25;
+}
+
+h1 { font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem); margin: 0.4em 0 0.2em; }
+h2 {
+  font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
+  margin: 1.6em 0 0.5em;
+  padding-top: 0.6em;
+  border-top: 3px solid var(--blue-light);
+}
+h3 { font-size: clamp(1.05rem, 0.97rem + 0.3vw, 1.25rem); margin: 1.1em 0 0.4em; font-weight: 500; }
+
+p { margin: 0.6em 0; }
+a { color: var(--blue-medium); text-decoration-thickness: 2px; }
+a:hover { color: var(--blue-dark); }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.75em 1.25em;
+  z-index: 100;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.1rem;
+}
+
+.site-header {
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.9rem 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand {
+  color: var(--white);
+  text-decoration: none;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+.brand:hover { color: var(--blue-light); }
+.brand-mark { color: var(--blue-medium); }
+.brand-sub {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.75rem;
+  color: var(--blue-light);
+  font-weight: 400;
+  margin-left: 0.5em;
+}
+.back-link {
+  color: var(--blue-light);
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--white); text-decoration: underline; }
+
+main { padding: 1.5rem 1.1rem 4rem; }
+
+.subtitle {
+  color: var(--blue-dark);
+  font-size: 1.05rem;
+}
+
+.lesson-nav {
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.1rem;
+  margin: 1.25rem 0;
+}
+.lesson-nav ul { margin: 0; padding-left: 1.2rem; }
+.lesson-nav a { font-weight: 500; }
+
+.lesson-index {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.lesson-index li {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+}
+.lesson-index a {
+  display: block;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: var(--blue-dark);
+  font-weight: 500;
+}
+.lesson-index a:hover { background: var(--blue-light); }
+
+.activity {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 0.25rem 1.25rem 1.25rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 3px rgba(10, 38, 62, 0.08);
+}
+
+.content-block { margin: 1.25rem 0; }
+.content-block:first-child { margin-top: 0.75rem; }
+
+.content-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  display: block;
+}
+.content-block figure { margin: 0.75em 0; }
+.content-block figcaption {
+  font-size: 0.9rem;
+  color: var(--blue-dark);
+  margin-top: 0.4em;
+}
+.media-link a { font-weight: 500; }
+
+.facilitator-note {
+  border-left: 4px solid var(--purple);
+  padding-left: 0.9rem;
+}
+
+.callout {
+  display: flex;
+  gap: 0.7rem;
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin: 1em 0;
+}
+.callout-icon { font-size: 1.2rem; flex: none; }
+.callout-body > *:first-child { margin-top: 0; }
+.callout-body > *:last-child { margin-bottom: 0; }
+.callout-body ul, .callout-body ol { padding-left: 1.2em; }
+
+.writing-box {
+  margin: 1em 0;
+  border: 2px dashed var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem 1.4rem;
+  background: var(--white);
+}
+.writing-box-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--blue-dark);
+  margin-bottom: 0.6rem;
+}
+.writing-box-lines { min-height: 3.5rem; }
+
+.kc-questions { padding-left: 1.3rem; }
+.kc-questions > li { margin-bottom: 1.1rem; }
+.kc-options { list-style: none; padding-left: 0; margin: 0.5em 0; }
+.kc-options li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+  margin: 0.35em 0;
+}
+.option-box {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  border: 2px solid var(--blue-dark);
+  border-radius: 3px;
+}
+
+.site-footer {
+  background: var(--blue-darkest);
+  color: var(--blue-light);
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.site-footer a { color: var(--white); }
+
+/* Tablet and up */
+@media (min-width: 640px) {
+  :root { --max-width: 40rem; }
+  main { padding: 2rem 1.5rem 5rem; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  :root { --max-width: 44rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
+
+/* ---------------------------------------------------------------- */
+/* Print: same source file, print-ready output.                     */
+/* ---------------------------------------------------------------- */
+@media print {
+  .skip-link, .site-header, .site-footer, .lesson-nav, .back-link {
+    display: none !important;
+  }
+  body { background: var(--white); font-size: 11.5pt; color: #000; }
+  main { padding: 0; max-width: none; }
+  .wrap { max-width: none; padding: 0; }
+  h1, h2, h3 { color: #000; }
+  h2 { border-top-color: #ccc; page-break-after: avoid; }
+  h3 { page-break-after: avoid; }
+  .activity {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    page-break-before: always;
+  }
+  .activity:first-of-type { page-break-before: auto; }
+  .content-block { page-break-inside: avoid; }
+  .callout {
+    background: #fff;
+    border: 1px solid #999;
+    border-left: 4px solid #666;
+  }
+  .writing-box {
+    border: 1.5px dashed #666;
+  }
+  .writing-box-lines { min-height: 5rem; }
+  .option-box { border-color: #000; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+  img { max-width: 100% !important; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">〜</span> SEE change <span class="brand-sub">PDM Light Touch ToT</span></a>
+    <a class="back-link" href="../index.html">&larr; All lessons</a>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>1.1 — Think-Feel-Do Cycle</h1>
+  
+  <nav class="lesson-nav" aria-label="Activities in this lesson"><ul><li><a href="#1-1-1-three-entrepreneurs-three-results">1.1.1 – Three Entrepreneurs, Three Results</a></li><li><a href="#1-1-2-your-think-feel-do-cycles">1.1.2 – Your Think-Feel-Do Cycles</a></li></ul></nav>
+  <article class="activity" id="1-1-1-three-entrepreneurs-three-results"><h2>1.1.1 – Three Entrepreneurs, Three Results</h2><section class="content-block type-story"><h3>📘 THREE ENTREPRENEURS, THREE RESULTS</h3><figure><img src="https://codahosted.io/docs/5Mejl6KavB/blobs/bl-ehnm0hW809/96d50c6c2460f68846a579d93ab28b187a10058e08b4c24bd1d41553ba73ae6461bf15ff980246edd1a110d5cdca625853edce45b9ddb6b7208d5166034330a9952511628b0de00d8edefa4f7cdbe3e53324403e248928abeb99ccd8b1a3dfc15ca31ae8" alt="Illustration of Sarah, a smiling woman with her hair in a bun, wearing a green jacket over a white top." loading="lazy"><figcaption>Sarah</figcaption></figure>
+<figure><img src="https://codahosted.io/docs/5Mejl6KavB/blobs/bl-h8ZfSHjPbJ/6658846a213d835dbbd9668e8aa8fada29d96dfc633317ac1b89388a5cf898ead5453c377fc99d9c2a67d9baf81e6596d0c34a8557fff980494f32c861fff21d164e093119a5985ee758cf4e60f136ac3c7cab7078f89c7eaf4c3dca0d11987b61d0632c" alt="Illustration of Moses, an older man resting his cheek on his hand, looking tired and discouraged." loading="lazy"><figcaption>Moses</figcaption></figure>
+<figure><img src="https://codahosted.io/docs/5Mejl6KavB/blobs/bl-8zFXXXIyLF/aabc60b2d75b396b1e325de5dd7c775037ecb4ff416b5668b1b01011aa41ec93724e1093666740e562dde5c3f78c104c143018b8d389f95c7a98a547117c35901760bd264a6f775c2acd3d930ebc7be48c28d36fd627f8cc9736375786226946521bb9f6" alt="Illustration of Amina, a woman in a purple headscarf and top with her hand near her mouth, looking worried." loading="lazy"><figcaption>Amina</figcaption></figure><p><strong>Read the stories slowly one at a time, followed by questions.</strong></p>
+<aside class="callout callout-note" role="note"><span class="callout-icon" aria-hidden="true">📝</span><div class="callout-body"><h4><strong>3 Entrepreneurs, 3 Results</strong></h4>
+<p><strong><em>I’m going to tell you a story about three entrepreneurs who get three different results…</em></strong></p>
+<p><strong><em>Sarah, Moses, and Amina all sell chickens and eggs in the local market in different counties. One month, sales become very slow…</em></strong></p>
+<hr />
+<p>SARAH:</p>
+<ul>
+<li><em>Sarah feels worried after noticing that sales are becoming slow…</em></li>
+<li><em>Sarah spends her time thinking about how to improve her sales, leading her to feel more confident and hopeful that she can find a way forward.</em> </li>
+<li><em>She starts talking to customers and asking what they are looking for. Many customers mention children's clothes so she tries to change her product stock.</em> </li>
+<li><em>The following month, sales improve.</em></li>
+</ul>
+<hr />
+<p>MOSES:</p>
+<ul>
+<li><em>Moses feels worried after noticing that sales are becoming slow…</em></li>
+<li><em>Moses spends a lot of time thinking and talking about how difficult business is.</em></li>
+<li><em>He feels discouraged and complains about customers and competitors, which makes him feel more frustrated and upset.</em></li>
+<li><em>A few weeks later, sales are still low.</em></li>
+</ul>
+<hr />
+<p>AMINA:</p>
+<ul>
+<li><em>Amina feels worried after noticing that sales are becoming slow…</em></li>
+<li><em>Amina spends a lot of time worrying about making the wrong decision.</em></li>
+<li><em>She keeps thinking about making a change to her business, but never decides exactly what to do.</em></li>
+<li><em>A few weeks later, sales remain low.</em></li>
+</ul></div></aside></section><section class="content-block type-group-debrief"><h3>💬  Qs for the group (after ALL stories)</h3><figure><img src="https://codahosted.io/docs/5Mejl6KavB/blobs/bl-58lHtOlglG/98a61f3d044c7ba3d792c9ac56be7808b9ad38d6f0b8e085d9c547781012644e10850ec12697121a8330612ad7acb688f7acf296dc82d645a36f7c96b10bca6b64e18d02ec49306243d94fe85b2edf9e0b78f9042d10de66faf28f02b8453dfb6b134b22" alt="Table with columns Character, Think, Feel, Do, Result. Sarah: &#x27;There must be a solution&#x27;, hopeful, tries something new, sales improve. Moses: &#x27;Nothing will change&#x27;, discouraged, complains, sales stay low. Amina: &#x27;What if I make a mistake?&#x27;, worried, delays action, sales stay low." loading="lazy"><figcaption>Think-Feel-Do-Result table for the three entrepreneurs</figcaption></figure><aside class="callout callout-info" role="note"><span class="callout-icon" aria-hidden="true">ℹ️</span><div class="callout-body"><h4>3 Think-Feel-Do Cycles? 3 Results?</h4>
+<ul>
+<li><strong>What differences do you notice between Sarah, Moses, Amina?</strong></li>
+<li><strong>Why do you think their results were different?</strong></li>
+<li><strong>What might have been happening inside the mind of each entrepreneur?</strong></li>
+</ul></div></aside><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-trainer-activity"><h3>💬  Q Personal Check In</h3><aside class="callout callout-tip" role="note"><span class="callout-icon" aria-hidden="true">💡</span><div class="callout-body"><h4><strong>Which entrepreneur do you relate to most?</strong></h4>
+<p><strong>[ADD Text Response Field / Form for linked]</strong></p>
+<p><strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong></strong></p>
+<p><strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong></strong></p>
+<p><strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong></strong></p></div></aside><div class="writing-box"><span class="writing-box-label">Your response</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>🔑 CLOSING KEY MESSAGES</h3><aside class="callout callout-note" role="note"><span class="callout-icon" aria-hidden="true">📝</span><div class="callout-body"><h4><strong>CLOSING KEY MESSAGES</strong></h4>
+<ul>
+<li><strong>It’s natural to sometimes feel like giving up (like Moses) or know you should change something, but don’t actually do it (like Amina).</strong></li>
+<li><strong>It’s important to be aware of how these thoughts and feelings are affecting our actions and ultimately our businesses.</strong></li>
+<li><strong>The same situation can lead to different results depending on how we think, feel, and act.</strong></li>
+<li><strong>Over the next few lessons, we will explore our own stories, beliefs, fears, and goals.</strong></li>
+</ul></div></aside></section></article><article class="activity" id="1-1-2-your-think-feel-do-cycles"><h2>1.1.2 – Your Think-Feel-Do Cycles</h2><section class="content-block type-group-activity"><h3>💬 Intro to THINK-FEEL-DO CYCLES</h3><figure><img src="https://codahosted.io/docs/5Mejl6KavB/blobs/bl-ER9XkJPgpb/7a67550552e078ea38ff641f080d673c4f3d7ab0e666abea4e0325d358b90febdd23594dfcabafe413ea0c6da4deccf8fd8458c3053efe58584e2de0fc71aa11e1d2de5546466f0ce446ae980ee8df954e7727304f4b1026763975906f6d20ac19158d81" alt="Cartoon of a gray figure leaning forward, with a cycle of three circles above the head: a purple thought cloud, a red heart and a hand, joined by arrows in a loop." loading="lazy"><figcaption>Think-Feel-Do cycle</figcaption></figure><aside class="callout callout-note" role="note"><span class="callout-icon" aria-hidden="true">📝</span><div class="callout-body"><h4>Think-Feel-Do Cycle</h4>
+<ul>
+<li>The way we think and the messages we tell ourselves are very powerful. What we think affects how we feel, and what we do.</li>
+<li>This cycle continues all day for us, in many different situations – in a classroom, at the market, when sharing a meal with someone. We all are doing, thinking, and feeling, all of the time.</li>
+<li><em>For example:</em></li>
+<li>When I sleep very little, how do I FEEL in the morning? → Tired and frustrated!</li>
+<li>When I FEEL angry and annoyed</li>
+</ul></div></aside>
+<aside class="callout callout-tip" role="note"><span class="callout-icon" aria-hidden="true">💡</span><div class="callout-body"><h4>Do you notice the Think-Feel-Do cycle in your life?</h4>
+<p>Think and write notes in your journal or participant packet.</p>
+<hr />
+<hr />
+<hr />
+<hr /></div></aside><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>🔑 JUST STARTING: THINK-FEEL-DO</h3><aside class="callout callout-note" role="note"><span class="callout-icon" aria-hidden="true">📝</span><div class="callout-body"><h4>About Think-Feel-Do</h4>
+<ul>
+<li>There is no right answer to these questions necessarily, we are just letting ourselves be curious!</li>
+<li>The purpose is simply to begin noticing the connection.</li>
+<li>The rest of the workshop will continue building understanding.</li>
+</ul></div></aside></section><section class="content-block type-activity"><h3>👤 PAIR SHARING</h3><aside class="callout callout-tip" role="note"><span class="callout-icon" aria-hidden="true">💡</span><div class="callout-body"><h4>Small Group Discussion</h4>
+<ul>
+<li>What is something that you like to do? What feelings and thoughts happen after you do it?</li>
+<li>Are there any ways that your thoughts, emotions, or actions cause trouble for you? What is an example of this cycle that ends negatively?</li>
+</ul></div></aside><div class="writing-box"><span class="writing-box-label">Your response</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-prompt-question"><h3>❓ Question</h3><p>Group notes: What is something that you like to do? What feelings and thoughts happen after you do it? Are there any ways that your thoughts, emotions, or actions cause trouble for you? What is an example of this cycle that ends negatively?</p><div class="writing-box"><span class="writing-box-label">Your response</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>🔑 CLOSING KEY MESSAGES</h3><aside class="callout callout-note" role="note"><span class="callout-icon" aria-hidden="true">📝</span><div class="callout-body"><h4>Closing Key Messages</h4>
+<ul>
+<li>Our thoughts, feelings, and actions are interconnected!</li>
+<li>These patterns can lead us in many directions. Sometimes in positive and negative directions sometimes.</li>
+<li><strong>The first step is to notice!</strong></li>
+</ul></div></aside>
+<aside class="callout callout-note" role="note"><span class="callout-icon" aria-hidden="true">📝</span><div class="callout-body"><h4>Why we will continue noticing Think-Feel-Do through the program:</h4>
+<ul>
+<li>Understanding ourselves makes it easier to understand the people around us, including our colleagues. This helps us build positive relationships with others, so we can better work together.</li>
+<li>We can harness our thoughts to move towards what we want.</li>
+<li>The goal of this workshop is to help you harness this for yourself to move towards the vision and goals you have for yourself and your life.</li>
+</ul></div></aside></section><section class="content-block type-knowledge-check"><h3>📝 Knowledge Check: 1.1.2 – Your Think-Feel-Do Cycles</h3><ol class="kc-questions"><li><p>What is one Think-Feel-Do cycle that you notice in your own life that leads to NEGATIVE outcomes for you?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>What is one Think-Feel-Do cycle that you notice in your own life that leads to POSITIVE outcomes for you?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li></ol></section></article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>SEE Change Initiative · Johns Hopkins Bloomberg School of Public Health</p>
+  </div>
+</footer>
+</body>
+</html>
