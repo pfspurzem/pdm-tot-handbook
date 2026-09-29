@@ -189,6 +189,29 @@ main { padding: 1.5rem 1.1rem 4rem; }
 }
 .media-link a { font-weight: 500; }
 
+/* Any raw table that arrives via source markdown (e.g. pasted from a Coda
+   canvas) -- without this, it falls back to bare browser/Coda default
+   styling, off-brand and untested for print. */
+.content-block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+.content-block th, .content-block td {
+  border: 1px solid var(--blue-light);
+  padding: 0.5em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+.content-block th {
+  background: var(--blue-dark);
+  color: var(--white);
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+}
+.content-block tr:nth-child(even) td { background: var(--blue-light); }
+
 .facilitator-note {
   border-left: 4px solid var(--purple);
   padding-left: 0.9rem;
@@ -286,7 +309,14 @@ main { padding: 1.5rem 1.1rem 4rem; }
     page-break-before: always;
   }
   .activity:first-of-type { page-break-before: auto; }
-  .content-block { page-break-inside: avoid; }
+  /* Deliberately NOT page-break-inside:avoid on .content-block itself: a
+     block can be large (multiple images + a long callout), and forcing the
+     whole thing to stay together pushes it entirely to the next page when
+     it doesn't fit in whatever space is left -- leaving a near-blank page
+     behind it. Only small, single-glance pieces are kept unsplit. */
+  .writing-box, .callout, .kc-questions > li, table {
+    page-break-inside: avoid;
+  }
   .callout {
     background: #fff;
     border: 1px solid #999;
@@ -303,7 +333,9 @@ main { padding: 1.5rem 1.1rem 4rem; }
     font-size: 0.85em;
     color: #555;
   }
-  img { max-width: 100% !important; }
+  img { max-width: 100% !important; max-height: 9in; }
+  .content-block th { background: #ddd !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .content-block tr:nth-child(even) td { background: #f2f2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 </style>

@@ -141,7 +141,7 @@ def render_markdown(text: str) -> str:
 
     def _stash_callout(m: re.Match) -> str:
         ctype = m.group("type")
-        inner_html = md.markdown(m.group("body"), extensions=["sane_lists"])
+        inner_html = md.markdown(m.group("body"), extensions=["sane_lists", "tables"])
         # Demote heading levels inside the callout by one, so a "###" written
         # inside <callout> (h3) nests correctly under the block's own h3 title.
         for level in (3, 2, 1):
@@ -155,7 +155,7 @@ def render_markdown(text: str) -> str:
         return f"\x00CALLOUT{len(placeholders) - 1}\x00"
 
     without_callouts = CALLOUT_RE.sub(_stash_callout, text)
-    body_html = md.markdown(without_callouts, extensions=["sane_lists"])
+    body_html = md.markdown(without_callouts, extensions=["sane_lists", "tables"])
 
     def _restore(m: re.Match) -> str:
         return placeholders[int(m.group(1))]

@@ -189,6 +189,29 @@ main { padding: 1.5rem 1.1rem 4rem; }
 }
 .media-link a { font-weight: 500; }
 
+/* Any raw table that arrives via source markdown (e.g. pasted from a Coda
+   canvas) -- without this, it falls back to bare browser/Coda default
+   styling, off-brand and untested for print. */
+.content-block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+.content-block th, .content-block td {
+  border: 1px solid var(--blue-light);
+  padding: 0.5em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+.content-block th {
+  background: var(--blue-dark);
+  color: var(--white);
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+}
+.content-block tr:nth-child(even) td { background: var(--blue-light); }
+
 .facilitator-note {
   border-left: 4px solid var(--purple);
   padding-left: 0.9rem;
@@ -286,7 +309,14 @@ main { padding: 1.5rem 1.1rem 4rem; }
     page-break-before: always;
   }
   .activity:first-of-type { page-break-before: auto; }
-  .content-block { page-break-inside: avoid; }
+  /* Deliberately NOT page-break-inside:avoid on .content-block itself: a
+     block can be large (multiple images + a long callout), and forcing the
+     whole thing to stay together pushes it entirely to the next page when
+     it doesn't fit in whatever space is left -- leaving a near-blank page
+     behind it. Only small, single-glance pieces are kept unsplit. */
+  .writing-box, .callout, .kc-questions > li, table {
+    page-break-inside: avoid;
+  }
   .callout {
     background: #fff;
     border: 1px solid #999;
@@ -303,7 +333,9 @@ main { padding: 1.5rem 1.1rem 4rem; }
     font-size: 0.85em;
     color: #555;
   }
-  img { max-width: 100% !important; }
+  img { max-width: 100% !important; max-height: 9in; }
+  .content-block th { background: #ddd !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .content-block tr:nth-child(even) td { background: #f2f2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 </style>
@@ -349,12 +381,12 @@ main { padding: 1.5rem 1.1rem 4rem; }
 <li><em>Amina spends a lot of time worrying about making the wrong decision.</em></li>
 <li><em>She keeps thinking about making a change to her business, but never decides exactly what to do.</em></li>
 <li><em>A few weeks later, sales remain low.</em></li>
-</ul></div></aside></section><section class="content-block type-group-debrief"><h3>💬  Qs for the group (after ALL stories)</h3><figure><img src="https://codahosted.io/docs/5Mejl6KavB/blobs/bl-58lHtOlglG/98a61f3d044c7ba3d792c9ac56be7808b9ad38d6f0b8e085d9c547781012644e10850ec12697121a8330612ad7acb688f7acf296dc82d645a36f7c96b10bca6b64e18d02ec49306243d94fe85b2edf9e0b78f9042d10de66faf28f02b8453dfb6b134b22" alt="Table with columns Character, Think, Feel, Do, Result. Sarah: &#x27;There must be a solution&#x27;, hopeful, tries something new, sales improve. Moses: &#x27;Nothing will change&#x27;, discouraged, complains, sales stay low. Amina: &#x27;What if I make a mistake?&#x27;, worried, delays action, sales stay low." loading="lazy"><figcaption>Think-Feel-Do-Result table for the three entrepreneurs</figcaption></figure><aside class="callout callout-info" role="note"><span class="callout-icon" aria-hidden="true">ℹ️</span><div class="callout-body"><h4>3 Think-Feel-Do Cycles? 3 Results?</h4>
-<ul>
-<li><strong>What differences do you notice between Sarah, Moses, Amina?</strong></li>
-<li><strong>Why do you think their results were different?</strong></li>
-<li><strong>What might have been happening inside the mind of each entrepreneur?</strong></li>
-</ul></div></aside><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-trainer-activity"><h3>💬  Q Personal Check In</h3><aside class="callout callout-tip" role="note"><span class="callout-icon" aria-hidden="true">💡</span><div class="callout-body"><h4><strong>Which entrepreneur do you relate to most?</strong></h4>
+</ul></div></aside></section><section class="content-block type-group-debrief"><h3>💬  Qs for the group (after ALL stories)</h3><table><thead><tr><th>Character</th><th>Think</th><th>Feel</th><th>Do</th><th>Result</th></tr></thead><tbody><tr><td>Sarah</td><td>"There must be a solution."</td><td>Hopeful</td><td>Tries something new</td><td>Sales improve</td></tr><tr><td>Moses</td><td>"Nothing will change."</td><td>Discouraged</td><td>Complains</td><td>Sales stay low</td></tr><tr><td>Amina</td><td>"What if I make a mistake?"</td><td>Worried</td><td>Delays action</td><td>Sales stay low</td></tr></tbody></table>
+<p><callout type="info"></p>
+<h3>3 Think-Feel-Do Cycles? 3 Results?</h3>
+<p>What differences do you notice between Sarah, Moses, Amina?
+Why do you think their results were different?
+What might have been happening inside the mind of each entrepreneur?</p><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-trainer-activity"><h3>💬  Q Personal Check In</h3><aside class="callout callout-tip" role="note"><span class="callout-icon" aria-hidden="true">💡</span><div class="callout-body"><h4><strong>Which entrepreneur do you relate to most?</strong></h4>
 <p><strong>[ADD Text Response Field / Form for linked]</strong></p>
 <p><strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong></strong></p>
 <p><strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong></strong></p>
