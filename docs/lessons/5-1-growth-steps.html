@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.1 — Growth Steps — PDM Light Touch ToT</title>
+<meta name="description" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&amp;family=Quicksand:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+/* PDM ToT Handbook — shared style, embedded into every generated page by
+   generate_site.py. Authored once here; do not hand-edit the generated
+   HTML files under docs/ directly, since a rebuild will overwrite them. */
+
+:root {
+  --white: #FFFFFF;
+  --blue-light: #CFE7F5;
+  --blue-medium: #5193C8;
+  --blue-dark: #21386D;
+  --blue-darkest: #0A263E;
+  --purple: #7E5AC7;
+  --red: #C76F61;
+  --green: #16CC79;
+  --ink: #16232f; /* body text: darker than blue-darkest, higher contrast on white */
+  --paper: #FFFFFF;
+  --page-bg: #F3F6F8;
+  --focus-ring: #0B5FA5;
+  --max-width: 46rem;
+  --radius: 0.5rem;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Oswald", "Quicksand", system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--blue-darkest);
+  line-height: 1.25;
+}
+
+h1 { font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem); margin: 0.4em 0 0.2em; }
+h2 {
+  font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
+  margin: 1.6em 0 0.5em;
+  padding-top: 0.6em;
+  border-top: 3px solid var(--blue-light);
+}
+h3 { font-size: clamp(1.05rem, 0.97rem + 0.3vw, 1.25rem); margin: 1.1em 0 0.4em; font-weight: 500; }
+
+p { margin: 0.6em 0; }
+a { color: var(--blue-medium); text-decoration-thickness: 2px; }
+a:hover { color: var(--blue-dark); }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.75em 1.25em;
+  z-index: 100;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.1rem;
+}
+
+.site-header {
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.9rem 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand {
+  color: var(--white);
+  text-decoration: none;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+.brand:hover { color: var(--blue-light); }
+.brand-mark { color: var(--blue-medium); }
+.brand-sub {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.75rem;
+  color: var(--blue-light);
+  font-weight: 400;
+  margin-left: 0.5em;
+}
+.back-link {
+  color: var(--blue-light);
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--white); text-decoration: underline; }
+
+main { padding: 1.5rem 1.1rem 4rem; }
+
+.subtitle {
+  color: var(--blue-dark);
+  font-size: 1.05rem;
+}
+
+.lesson-nav {
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.1rem;
+  margin: 1.25rem 0;
+}
+.lesson-nav ul { margin: 0; padding-left: 1.2rem; }
+.lesson-nav a { font-weight: 500; }
+
+.lesson-index {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.lesson-index li {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+}
+.lesson-index a {
+  display: block;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: var(--blue-dark);
+  font-weight: 500;
+}
+.lesson-index a:hover { background: var(--blue-light); }
+
+.activity {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 0.25rem 1.25rem 1.25rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 3px rgba(10, 38, 62, 0.08);
+}
+
+.content-block { margin: 1.25rem 0; }
+.content-block:first-child { margin-top: 0.75rem; }
+
+.content-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  display: block;
+}
+.content-block figure { margin: 0.75em 0; }
+.content-block figcaption {
+  font-size: 0.9rem;
+  color: var(--blue-dark);
+  margin-top: 0.4em;
+}
+.media-link a { font-weight: 500; }
+
+/* Any raw table that arrives via source markdown (e.g. pasted from a Coda
+   canvas) -- without this, it falls back to bare browser/Coda default
+   styling, off-brand and untested for print. */
+.content-block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+.content-block th, .content-block td {
+  border: 1px solid var(--blue-light);
+  padding: 0.5em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+.content-block th {
+  background: var(--blue-dark);
+  color: var(--white);
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+}
+.content-block tr:nth-child(even) td { background: var(--blue-light); }
+
+.facilitator-note {
+  border-left: 4px solid var(--purple);
+  padding-left: 0.9rem;
+}
+
+.callout {
+  display: flex;
+  gap: 0.7rem;
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin: 1em 0;
+}
+.callout-icon { font-size: 1.2rem; flex: none; }
+.callout-body > *:first-child { margin-top: 0; }
+.callout-body > *:last-child { margin-bottom: 0; }
+.callout-body ul, .callout-body ol { padding-left: 1.2em; }
+
+.writing-box {
+  margin: 1em 0;
+  border: 2px dashed var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem 1.4rem;
+  background: var(--white);
+}
+.writing-box-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--blue-dark);
+  margin-bottom: 0.6rem;
+}
+.writing-box-lines { min-height: 3.5rem; }
+
+.kc-questions { padding-left: 1.3rem; }
+.kc-questions > li { margin-bottom: 1.1rem; }
+.kc-options { list-style: none; padding-left: 0; margin: 0.5em 0; }
+.kc-options li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+  margin: 0.35em 0;
+}
+.option-box {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  border: 2px solid var(--blue-dark);
+  border-radius: 3px;
+}
+
+.site-footer {
+  background: var(--blue-darkest);
+  color: var(--blue-light);
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.site-footer a { color: var(--white); }
+
+/* Tablet and up */
+@media (min-width: 640px) {
+  :root { --max-width: 40rem; }
+  main { padding: 2rem 1.5rem 5rem; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  :root { --max-width: 44rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
+
+/* ---------------------------------------------------------------- */
+/* Print: same source file, print-ready output.                     */
+/* ---------------------------------------------------------------- */
+@media print {
+  .skip-link, .site-header, .site-footer, .lesson-nav, .back-link {
+    display: none !important;
+  }
+  body { background: var(--white); font-size: 11.5pt; color: #000; }
+  main { padding: 0; max-width: none; }
+  .wrap { max-width: none; padding: 0; }
+  h1, h2, h3 { color: #000; }
+  h2 { border-top-color: #ccc; page-break-after: avoid; }
+  h3 { page-break-after: avoid; }
+  .activity {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    page-break-before: always;
+  }
+  .activity:first-of-type { page-break-before: auto; }
+  /* Deliberately NOT page-break-inside:avoid on .content-block itself: a
+     block can be large (multiple images + a long callout), and forcing the
+     whole thing to stay together pushes it entirely to the next page when
+     it doesn't fit in whatever space is left -- leaving a near-blank page
+     behind it. Only small, single-glance pieces are kept unsplit. */
+  .writing-box, .callout, .kc-questions > li, table {
+    page-break-inside: avoid;
+  }
+  .callout {
+    background: #fff;
+    border: 1px solid #999;
+    border-left: 4px solid #666;
+  }
+  .writing-box {
+    border: 1.5px dashed #666;
+  }
+  .writing-box-lines { min-height: 5rem; }
+  .option-box { border-color: #000; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+  img { max-width: 100% !important; max-height: 9in; }
+  .content-block th { background: #ddd !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .content-block tr:nth-child(even) td { background: #f2f2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">〜</span> SEE change <span class="brand-sub">PDM Light Touch ToT</span></a>
+    <a class="back-link" href="../index.html">&larr; All lessons</a>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>5.1 — Growth Steps</h1>
+  
+  <nav class="lesson-nav" aria-label="Activities in this lesson"><ul><li><a href="#5-1-1-grace-clears-the-way">5.1.1 – Grace Clears the Way</a></li><li><a href="#5-1-3-my-growth-steps">5.1.3 – My Growth Steps</a></li></ul></nav>
+  <article class="activity" id="5-1-1-grace-clears-the-way"><h2>5.1.1 – Grace Clears the Way</h2><section class="content-block type-key-messages"><h3>🔑 Introduce the idea of Growth Steps 👣</h3><ul>
+<li>We all know of issues we want to work on, but we’ve been stuck for a while and don’t know how to start.</li>
+<li>We often wait until it gets really bad, or wait longer than we wanted to. Sometimes we feel stuck and it’s hard to begin.</li>
+<li>Growth steps are small actions that can get us unstuck.</li>
+</ul></section><section class="content-block type-story"><h3>📘 GRACE CLEARS THE WAY</h3><p>Share the following story:</p>
+<p><em>[Image: TBD]</em></p>
+<ul>
+<li>The people of the village used to walk a short way across a field to get to the well.</li>
+<li>Over time, the path was overgrown, branches piled up and it made it difficult to pass.</li>
+<li>So the villagers would have to walk around the bush, which took an extra hour every day, carrying water.</li>
+<li>Everyone said that someone should clear the path.</li>
+<li>Grace noticed one day that she had taken over two hours a day to get water. Her mother, who was old now, could no longer make that walk.</li>
+<li>She, like others, thought about clearing the path many times, but it would take many days, even weeks to clear the path, and she believed she didn’t have any time (limiting belief), so she never began.</li>
+<li>After a long tiring day when she collected water, she was exhausted and sat on the floor of her house. She saw a machete - she thought that would be useful to start cutting the brush.</li>
+<li>So the next morning, she took the machete with her and cut the brush, only for 5-10 minutes, then went the long way to get the water.</li>
+<li>Every day that she fetched water, she was able to make a little more progress on clearing the brush for the short path to the well.</li>
+<li>After a week, a neighbor asked what she was doing? Impressed, the neighbor joined Grace the next day, with her own machete.</li>
+<li>After 3 weeks, Grace and her neighbor were able to clear the path, not just for themselves, but also others in the village.</li>
+</ul></section><section class="content-block type-group-debrief"><h3>💬 QUESTIONS FOR THE GROUP</h3><ul>
+<li>What is the moral of the story?</li>
+<li>What are the things you think you need? (capital, resources, etc.) but usually there is something small that can be done right now, with the resources we have?</li>
+<li>What pain are you going through because you have not yet cleared a path?</li>
+<li>What is the long path you are walking because you haven’t started working on your business / enterprise?</li>
+<li>What do you have now to start taking small steps?</li>
+<li>What is something that you’ve wanted to do something about, but don’t know where to begin?</li>
+<li>We often feel like we don't have time. Think about the things that you DO spend time on right now - are there things that you can bundle together to make it easier to move towards a goal?</li>
+<li>(For example: When you go to the market to buy food, is there someone you can speak to about where you may sell your goods)</li>
+</ul><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>🔑  CONCLUDE WITH KEY MESSAGES</h3><ul>
+<li>We all know of issues we want to work on, but we’ve been stuck for a while and don’t know how to start.</li>
+<li>We often wait until it gets really bad, or wait longer than we wanted to. Sometimes we feel stuck and it’s hard to begin.</li>
+<li>Starting small can lead to big changes over time. Start with what you have!</li>
+<li>You don’t need to wait for more money, or help, or to have everything planned before starting to try some new things.</li>
+</ul></section></article><article class="activity" id="5-1-3-my-growth-steps"><h2>5.1.3 – My Growth Steps</h2><section class="content-block type-group-activity"><h3>👤 REVIEW ENTERPRISE PLANS</h3><p>Direct participants to the page in their packet with the same questions.</p>
+<ul>
+<li>What are some of the most important changes you will make to carry out your plan?</li>
+<li>Where do you feel stuck or nervous to begin?</li>
+<li>What do you have to work with now (before receiving PDM funds?)</li>
+</ul><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>Time: 30 minutes / Key Messages / Learning Outcomes</h3><ul>
+<li>10 - Writing Growth Steps</li>
+<li>5 - Finding a peer buddy</li>
+<li>5 - Closing Discussion — You are the expert on your own life: You already have many answers and the wisdom to make a change if you believe it’s important to do so.</li>
+</ul>
+<p>It’s okay if you don’t complete the growth step – It’s only 7-days, so you can choose a new growth step if this one doesn’t work - or choose your next one when you do complete it! 👣</p>
+<p>To make a personal behavior change, look closer at your values, your patterns and your motivations. Then start small with specific Growth Steps. — Make consistent meaningful behavior changes (action commitment; intrinsic motivation)</p></section><section class="content-block type-key-messages"><h3>🔑 CHOOSING YOUR CHANGE</h3><ul>
+<li>You are the expert on your own life and you already have many answers and the wisdom to make a change.</li>
+<li>It’s time to pick something important to work on and choose your next step.</li>
+<li>It’s okay if you don’t complete the growth step – It’s only 7-days, so you can choose a new growth step if this one doesn’t work - or choose your next one when you do complete it! 👣</li>
+</ul></section><section class="content-block type-group-activity"><h3>👤 GROWTH STEPS</h3><ul>
+<li>Open your “Growth Steps” worksheet:</li>
+<li>There are 4 questions to answer and choose your next growth step.</li>
+<li>I will give you ~2 minutes to write or draw your ideas for each question.</li>
+<li>Read each of the parts of the process (below) while participants follow along in their packets.</li>
+</ul>
+<p>⚠️ Note: If people are not comfortable writing, you could have people get in to pairs to think and share thoughts for each question. They should at least try to write an answer to the final question that is the “Growth Step”.</p><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-group-activity"><h3>PROCESS (2 MINUTES EACH) / EXAMPLE:</h3><p>AWARENESS:
+What is something you want to prepare or change about your life? before receiving PDM funds?
+What is something in your enterprise plan that you want to make progress on?
+What behaviors have you tried to make progress? What will you need to change? (Example: I have not been saving enough money. I have to pay my loan back soon, and I am not ready.)
+MEANING: Why is it important for you to address this issue?
+(Understanding this can keep you motivated when you encounter challenges.) (Example: I need to begin saving, even small amounts. It will feel good to pay back my initial loan and be eligible for a bigger loan later.)
+SHIFT / Reframe: When you look in the mirror: What do you know about yourself that makes me feel powerful to make a new change? (Example: I am motivated to improve my financial situation; I have energy for my business and goals; I am good at counting money and have a separate purse ready for my savings.)
+👣 GROWTH STEP: What is your next step to move forward to get to my vision? Choose a specific action that will move you towards your goals and address the issue in focus. (Example: I will maintain a cash book each day at my store this week and set aside at least 200 UGX each day as the final transaction.)
+👣 Double check that your GROWTH STEP is:
+Specific → What will you do exactly?
+Measurable → How will you know when it’s complete?
+Achievable → Does it make sense with your schedule?
+Relevant → Related to the bigger issue
+Can be done in 7-days or less</p><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-group-activity"><h3>👤 FINDING A PEER BUDDY</h3><ul>
+<li>Group formation:</li>
+<li>Look around the group and find a person that you can stay in contact with during the next weeks.</li>
+<li>When you find your peer buddy, share your contact information and write it in your participant packet (or phone if you have one).</li>
+</ul>
+<p>Note: If there are people who don’t find a peer-buddy, you can offer the idea that there can be a group of 3 or 4 – if those are the people that are most ready to stay in contact together.</p>
+<ul>
+<li>Group sharing &amp; planning</li>
+<li>Take 5-mins to quickly share your Growth Steps with each other. You can start with the final action you chose, and when you will do it.</li>
+<li>Remember to listen actively when other people share, and take turns so everyone has a chance to share.</li>
+<li>If something isn’t clear, you can clarify</li>
+</ul><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>CLOSING MESSAGES</h3><ul>
+<li>Remind everyone to be kind and supportive with each other, and with themselves:</li>
+<li>It’s okay if you don’t complete the growth step – It’s only 7-days, so you can choose a new growth step if this one doesn’t work - or choose your next one when you do complete it! 👣</li>
+<li>What matters is that we continue to learn and not stay stuck if it’s important to change. 💪</li>
+</ul></section><section class="content-block type-key-messages"><h3>🔑 KEY TAKEAWAYS</h3><ul>
+<li>You are the expert on your own life: You already have many answers and the wisdom to make a change if you believe it’s important to do so.</li>
+<li>To make a personal behavior change, look closer at your values, your patterns and your motivations. Then start small with specific Growth Steps.</li>
+<li>No matter what the issue is, you can find some small way to make differences in your behaviors that will add up to a big change over time.</li>
+</ul>
+<p>Provide some extra encouragement and celebrate everyone’s participation in this empowering personal process. 🎉 💪</p></section><section class="content-block type-knowledge-check"><h3>📝 Knowledge Check: 5.1.3 – My Growth Steps</h3><ol class="kc-questions"><li><p>While working on their plans and finding their next Growth Step, one of your trainees asks for help in deciding a good step to try next. They have identified that they tend to procrastinate on long term projects at work and want to change this behavior. How would you work with this person to identify their next Growth Step? What questions would you ask?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>What would you say to someone who creates a growth step &#x27;to think more positively from now on&#x27;</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>After telling the story of Grace, a man says &#x27;Grace&#x27;s problem was small. I already have a large debt. A small step won&#x27;t clear that&#x27;  What would you say to that?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>What would you say if most people says that they can&#x27;t do anything until the money is their hand, but the date has been postponed and you don&#x27;t know when it will be transfered&#x27; What do you say to them?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>Put these facilitator actions in order:
+A. Guide participants through the 4-question Growth Steps worksheet
+B. Tell the &quot;Grace Clears the Way&quot; story and debrief it
+C. Help participants find a peer buddy and share their Growth Step
+D. Bridge to a short review of participants&#x27; Enterprise Plans</p><ul class="kc-options"><li><span class="option-box" aria-hidden="true"></span> B → D → A → C</li><li><span class="option-box" aria-hidden="true"></span> B → A → D → C</li><li><span class="option-box" aria-hidden="true"></span> D → B → A → C</li><li><span class="option-box" aria-hidden="true"></span> B → D → C → A</li></ul></li><li><p>Your group has an odd number of participants, and one person is left without a peer buddy after everyone else has paired off. What&#x27;s the best move?</p><ul class="kc-options"><li><span class="option-box" aria-hidden="true"></span> Pair that person with yourself as the facilitator for the rest of the program</li><li><span class="option-box" aria-hidden="true"></span> Fold them into an existing pair to make a group of 3, as the Handbook allows</li><li><span class="option-box" aria-hidden="true"></span> Tell them they&#x27;ll need to complete the accountability check-ins alone</li><li><span class="option-box" aria-hidden="true"></span> Re-shuffle everyone&#x27;s pairs to try to make it even</li></ul></li><li><p>Which of these two fallbacks — discussing in pairs instead of writing, or grouping 3–4 people instead of finding exactly one partner — do you expect to need more often with your specific group? Does having the fallback already decided make you feel more prepared to handle it in the moment?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li></ol></section></article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>SEE Change Initiative · Johns Hopkins Bloomberg School of Public Health</p>
+  </div>
+</footer>
+</body>
+</html>

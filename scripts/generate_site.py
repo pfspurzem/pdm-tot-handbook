@@ -93,6 +93,10 @@ LESSON_ALLOWLIST = [
     "2.1 — My Tree of Life",
     "2.2 — Roots & Fruits of My Enterprise",
     "3.1 — Elephant Story and the Power of Words",
+    "4.1 — Myself, My Friend",
+    "4.2 — Planning for Your Time",
+    "5.1 — Growth Steps",
+    "5.2 — TAKE HOME ASSIGNMENT: Share your Tree of Life with a Friend or Family Member",
 ]
 
 RESPONSE_TYPES = {"Activity", "Trainer Activity", "Prompt Question", "Facilitator Scenario Check"}
