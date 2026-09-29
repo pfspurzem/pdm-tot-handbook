@@ -89,6 +89,10 @@ LESSON_ALLOWLIST = [
     "0.1 — Share Names & Community Agreement",
     "0.2 — My Successes so Far & Active Listening",
     "1.1 — Think-Feel-Do Cycle",
+    "1.2 — Growth Mindset",
+    "2.1 — My Tree of Life",
+    "2.2 — Roots & Fruits of My Enterprise",
+    "3.1 — Elephant Story and the Power of Words",
 ]
 
 RESPONSE_TYPES = {"Activity", "Trainer Activity", "Prompt Question", "Facilitator Scenario Check"}
@@ -358,6 +362,12 @@ def build():
                 ),
                 key=lambda b: val(b, C_BLK_ORDER_NUM, 9999) or 9999,
             )
+            if not act_blocks:
+                # A genuine content gap (this activity has zero blocks in Coda,
+                # same as some lessons) -- skip it rather than render an empty
+                # heading that still eats a full page break in print.
+                print(f"WARNING: activity '{act_name}' has no included content blocks, skipping", file=sys.stderr)
+                continue
             act_id = slugify(act_name)
             nav_items.append(f'<li><a href="#{act_id}">{html.escape(act_name)}</a></li>')
             rendered_blocks = "".join(render_block(b, kc_rows, media_by_name) for b in act_blocks)

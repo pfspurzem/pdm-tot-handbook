@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.1 — Elephant Story and the Power of Words — PDM Light Touch ToT</title>
+<meta name="description" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&amp;family=Quicksand:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+/* PDM ToT Handbook — shared style, embedded into every generated page by
+   generate_site.py. Authored once here; do not hand-edit the generated
+   HTML files under docs/ directly, since a rebuild will overwrite them. */
+
+:root {
+  --white: #FFFFFF;
+  --blue-light: #CFE7F5;
+  --blue-medium: #5193C8;
+  --blue-dark: #21386D;
+  --blue-darkest: #0A263E;
+  --purple: #7E5AC7;
+  --red: #C76F61;
+  --green: #16CC79;
+  --ink: #16232f; /* body text: darker than blue-darkest, higher contrast on white */
+  --paper: #FFFFFF;
+  --page-bg: #F3F6F8;
+  --focus-ring: #0B5FA5;
+  --max-width: 46rem;
+  --radius: 0.5rem;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Oswald", "Quicksand", system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--blue-darkest);
+  line-height: 1.25;
+}
+
+h1 { font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem); margin: 0.4em 0 0.2em; }
+h2 {
+  font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
+  margin: 1.6em 0 0.5em;
+  padding-top: 0.6em;
+  border-top: 3px solid var(--blue-light);
+}
+h3 { font-size: clamp(1.05rem, 0.97rem + 0.3vw, 1.25rem); margin: 1.1em 0 0.4em; font-weight: 500; }
+
+p { margin: 0.6em 0; }
+a { color: var(--blue-medium); text-decoration-thickness: 2px; }
+a:hover { color: var(--blue-dark); }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.75em 1.25em;
+  z-index: 100;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.1rem;
+}
+
+.site-header {
+  background: var(--blue-darkest);
+  color: var(--white);
+  padding: 0.9rem 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand {
+  color: var(--white);
+  text-decoration: none;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+.brand:hover { color: var(--blue-light); }
+.brand-mark { color: var(--blue-medium); }
+.brand-sub {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.75rem;
+  color: var(--blue-light);
+  font-weight: 400;
+  margin-left: 0.5em;
+}
+.back-link {
+  color: var(--blue-light);
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.back-link:hover { color: var(--white); text-decoration: underline; }
+
+main { padding: 1.5rem 1.1rem 4rem; }
+
+.subtitle {
+  color: var(--blue-dark);
+  font-size: 1.05rem;
+}
+
+.lesson-nav {
+  background: var(--blue-light);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.1rem;
+  margin: 1.25rem 0;
+}
+.lesson-nav ul { margin: 0; padding-left: 1.2rem; }
+.lesson-nav a { font-weight: 500; }
+
+.lesson-index {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.lesson-index li {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+}
+.lesson-index a {
+  display: block;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: var(--blue-dark);
+  font-weight: 500;
+}
+.lesson-index a:hover { background: var(--blue-light); }
+
+.activity {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 0.25rem 1.25rem 1.25rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 3px rgba(10, 38, 62, 0.08);
+}
+
+.content-block { margin: 1.25rem 0; }
+.content-block:first-child { margin-top: 0.75rem; }
+
+.content-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  display: block;
+}
+.content-block figure { margin: 0.75em 0; }
+.content-block figcaption {
+  font-size: 0.9rem;
+  color: var(--blue-dark);
+  margin-top: 0.4em;
+}
+.media-link a { font-weight: 500; }
+
+/* Any raw table that arrives via source markdown (e.g. pasted from a Coda
+   canvas) -- without this, it falls back to bare browser/Coda default
+   styling, off-brand and untested for print. */
+.content-block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+.content-block th, .content-block td {
+  border: 1px solid var(--blue-light);
+  padding: 0.5em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+.content-block th {
+  background: var(--blue-dark);
+  color: var(--white);
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+}
+.content-block tr:nth-child(even) td { background: var(--blue-light); }
+
+.facilitator-note {
+  border-left: 4px solid var(--purple);
+  padding-left: 0.9rem;
+}
+
+.callout {
+  display: flex;
+  gap: 0.7rem;
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin: 1em 0;
+}
+.callout-icon { font-size: 1.2rem; flex: none; }
+.callout-body > *:first-child { margin-top: 0; }
+.callout-body > *:last-child { margin-bottom: 0; }
+.callout-body ul, .callout-body ol { padding-left: 1.2em; }
+
+.writing-box {
+  margin: 1em 0;
+  border: 2px dashed var(--blue-medium);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem 1.4rem;
+  background: var(--white);
+}
+.writing-box-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--blue-dark);
+  margin-bottom: 0.6rem;
+}
+.writing-box-lines { min-height: 3.5rem; }
+
+.kc-questions { padding-left: 1.3rem; }
+.kc-questions > li { margin-bottom: 1.1rem; }
+.kc-options { list-style: none; padding-left: 0; margin: 0.5em 0; }
+.kc-options li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+  margin: 0.35em 0;
+}
+.option-box {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  border: 2px solid var(--blue-dark);
+  border-radius: 3px;
+}
+
+.site-footer {
+  background: var(--blue-darkest);
+  color: var(--blue-light);
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.site-footer a { color: var(--white); }
+
+/* Tablet and up */
+@media (min-width: 640px) {
+  :root { --max-width: 40rem; }
+  main { padding: 2rem 1.5rem 5rem; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  :root { --max-width: 44rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
+
+/* ---------------------------------------------------------------- */
+/* Print: same source file, print-ready output.                     */
+/* ---------------------------------------------------------------- */
+@media print {
+  .skip-link, .site-header, .site-footer, .lesson-nav, .back-link {
+    display: none !important;
+  }
+  body { background: var(--white); font-size: 11.5pt; color: #000; }
+  main { padding: 0; max-width: none; }
+  .wrap { max-width: none; padding: 0; }
+  h1, h2, h3 { color: #000; }
+  h2 { border-top-color: #ccc; page-break-after: avoid; }
+  h3 { page-break-after: avoid; }
+  .activity {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    page-break-before: always;
+  }
+  .activity:first-of-type { page-break-before: auto; }
+  /* Deliberately NOT page-break-inside:avoid on .content-block itself: a
+     block can be large (multiple images + a long callout), and forcing the
+     whole thing to stay together pushes it entirely to the next page when
+     it doesn't fit in whatever space is left -- leaving a near-blank page
+     behind it. Only small, single-glance pieces are kept unsplit. */
+  .writing-box, .callout, .kc-questions > li, table {
+    page-break-inside: avoid;
+  }
+  .callout {
+    background: #fff;
+    border: 1px solid #999;
+    border-left: 4px solid #666;
+  }
+  .writing-box {
+    border: 1.5px dashed #666;
+  }
+  .writing-box-lines { min-height: 5rem; }
+  .option-box { border-color: #000; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+  img { max-width: 100% !important; max-height: 9in; }
+  .content-block th { background: #ddd !important; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .content-block tr:nth-child(even) td { background: #f2f2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">〜</span> SEE change <span class="brand-sub">PDM Light Touch ToT</span></a>
+    <a class="back-link" href="../index.html">&larr; All lessons</a>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>3.1 — Elephant Story and the Power of Words</h1>
+  
+  <nav class="lesson-nav" aria-label="Activities in this lesson"><ul><li><a href="#3-1-1-power-of-words">3.1.1 – Power of Words</a></li><li><a href="#3-1-2-elephant-story-pt-1-limiting-beliefs">3.1.2 – Elephant Story (Pt 1) - Limiting Beliefs</a></li><li><a href="#3-1-3-elephant-story-pt-2-reframes">3.1.3 – Elephant Story (Pt 2) - Reframes</a></li></ul></nav>
+  <article class="activity" id="3-1-1-power-of-words"><h2>3.1.1 – Power of Words</h2><section class="content-block type-group-activity"><h3>👤 “I am stupid / I am strong”</h3><p><callout type="tip"></p>
+<h3>Experiment! “Power of Words”</h3>
+<p>We’ll do a short experiment now:
+To begin, please stand up
+Take a moment to notice how you feel right now.
+We’re going to say a 3-word statement together, for 10 seconds.
+The statement is: ‘I am stupid’
+You will say this aloud 10 times: ‘I am stupid’, ‘I am stupid’, ‘I am stupid’, …
+Ready? Go!
+Now, how do you feel? Physically? Emotionally? Mentally?
+What did we sound like? How did we sound when we were saying these things? (likely quiet, down, uncomfortable)
+Now we’re going to change just one of the words in the statement and do it again.
+Now we will say: ‘I am strong’
+Repeat the phrase together aloud 10 times: ‘I am strong, ‘I am strong, ‘I am strong, …”
+Ready? Go!
+How do you feel now? Was there any difference after changing the 1-word?
+Some people notice a difference. Some people don’t.
+We’re just trying to notice our think-feel-do cycle and the power of words to change our cycles sometimes.</p><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>🔑 CLOSING KEY MESSAGES</h3><p><callout type="note"></p>
+<h3>Closing Messages</h3>
+<p>Our words can often have a big impact on how we feel, so it’s worth paying attention to this, including what we say to ourselves!</p></section><section class="content-block type-group-debrief"><h3>💬 Power of Words Debrief</h3><p><callout type="info"></p>
+<h3>Reflection</h3>
+<p>Often times our Limiting Beliefs today come from experiences in our past, or our Roots
+“Roots → Think-Feel-Do → Actions”
+What examples came up in your discussions?
+After 2-3 volunteers, thank everyone for their participation &amp; curiosity. Then continue to the Elephant Story.</p><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section></article><article class="activity" id="3-1-2-elephant-story-pt-1-limiting-beliefs"><h2>3.1.2 – Elephant Story (Pt 1) - Limiting Beliefs</h2><section class="content-block type-story"><h3>📘 ELEPHANT STORY (PART 1: ROPES)</h3><img src="https://drive.google.com/file/d/1RkQNyxLO4ze32K5xAIULaYS0Z5REcUiw/view?usp=sharing" alt="" loading="lazy"><p>Share the story of the Elephant (part 1):</p>
+<ol>
+<li>
+<p><strong>Two gentlemen captured a small elephant and tied it to a wooden peg with a rope near their home.</strong></p>
+</li>
+<li>
+<p><strong>In the first month, the elephant pulled and pulled to get away. It hurt and he couldn’t break free.</strong></p>
+</li>
+<li>
+<p><strong>He continued to pull and pull, with no luck.</strong></p>
+</li>
+<li>
+<p><strong>By the third month, it stopped trying.</strong></p>
+</li>
+<li>
+<p><strong>Years later, the 100 kg baby is a 5,000 kg powerhouse. He is still kept on a rope, still connected to the wooden peg.</strong></p>
+</li>
+<li>
+<p><strong>It could walk away, but it doesn’t dare try.</strong></p>
+</li>
+<li>
+<p><strong>Two wild elephants passed by and said ‘You could break free easily’</strong></p>
+</li>
+<li>
+<p><strong>The elephant replied, “I would like to join you, but you don’t know how strong this rope is.” He didn’t listen to the other elephants' advice. He didn’t even think to ask for help.</strong></p>
+</li>
+<li>
+<p><strong>He looked longingly at the wild elephants and became sad, but then said to himself ‘this is just how my life is now, it will never change’</strong></p>
+</li>
+</ol></section><section class="content-block type-group-debrief"><h3>💬 Elephant Story Pt.1 - Debrief Discussion (3 mins)</h3><ul>
+<li>
+<p>What is the moral of the story?</p>
+</li>
+<li>
+<p>What was the elephant’s hope and dream?</p>
+</li>
+<li>
+<p>What are the facts and strengths that the elephant overlooked?</p>
+</li>
+<li>
+<p>What are those ropes that are holding you or pulling you down today?</p>
+</li>
+<li>
+<p>What excuses are people giving for not succeeding in life?</p>
+</li>
+<li>
+<p>What are you going to do to break those ropes in your life, family or business?</p>
+</li>
+<li>
+<p>What are the facts and strengths that you might be overlooking?</p>
+</li>
+</ul><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>🔑 CLOSING KEY MESSAGES</h3><p><callout type="note"></p>
+<h3>Closing Messages</h3>
+<p>When we think about our BUDS from our Tree of Life (goals, hopes, dreams), oftentimes we can have negative thoughts that make us doubt ourselves or feel hopeless. These are limiting beliefs.
+Limiting beliefs can come in the form of excuses, negative thoughts, worries, justifications, past failures, fear, etc.
+At first it may be hard to recognize our limiting beliefs, and we may have trouble realizing that they are not truths!
+It is usually uncomfortable to look for our own limiting beliefs – but don’t worry, we will not leave you here stuck with your ropes. Next we will learn some ways to break free.
+The elephant’s story is not yet over…</p></section></article><article class="activity" id="3-1-3-elephant-story-pt-2-reframes"><h2>3.1.3 – Elephant Story (Pt 2) - Reframes</h2><section class="content-block type-story"><h3>📘 ELEPHANT STORY (PART 2: ROPES)</h3><p>Share the story of the Elephant (part 2)</p>
+<ul>
+<li>
+<p>This image is also in the participant packet.</p>
+</li>
+<li>
+<p>The elephant wasn’t happy. He wanted explore the forest, eat wild fruits and meet other elephants</p>
+</li>
+<li>
+<p>Then the rains came and it saw its reflection in a pool of water. One voice in his head said ‘I am a captured elephant. There is nothing I can do’</p>
+</li>
+<li>
+<p>He looked more closely at himself, he noticed that his tusks were thicker, his legs were bigger.</p>
+</li>
+<li>
+<p>He had learned things over the years, like when his keeper leaves the home and which direction the wild elephants lived.</p>
+</li>
+<li>
+<p>Suddenly, he thought, ‘What if I follow the path of the wild elephants?’</p>
+</li>
+<li>
+<p>He pulled at the rope and nothing happened. He said to himself ‘don’t be foolish, you have tried this before and you failed. Now you have failed again’</p>
+</li>
+<li>
+<p>He remembered his reflection and say to himself ‘I have grown, I have learned, I can try again’</p>
+</li>
+<li>
+<p>This time he pulled from one side, and then another, then he used his tusks, and slowly the ropes were getting loose.</p>
+</li>
+<li>
+<p>The next day, when the keeper was out, the elephant broke free and walked into the forest. He noticed some dark shadows and vines and got nervous again.</p>
+</li>
+<li>
+<p>But then passing another pond he saw himself and remembered: ‘There may be new ropes ahead. But I am a different elephant now. Ropes won’t hold me forever’</p>
+</li>
+</ul></section><section class="content-block type-group-debrief"><h3>💬 Questions for the group (after each story)</h3><p><callout type="info"></p>
+<h3>Story Debrief</h3>
+<p>What is the moral of the story?
+Hint:
+What are the facts and strengths that the elephant overlooked?
+What are those ropes that are holding you or pulling you down today?
+What are the facts and strengths that you might be overlooking that could help you break free?</p><div class="writing-box"><span class="writing-box-label">Team notes &amp; insights</span><div class="writing-box-lines" aria-hidden="true"></div></div></section><section class="content-block type-key-messages"><h3>🔑 CLOSING KEY MESSAGES</h3><aside class="callout callout-note" role="note"><span class="callout-icon" aria-hidden="true">📝</span><div class="callout-body"><ul>
+<li>You can shift your focus and reduce the power of your limiting beliefs / ‘ropes’.</li>
+<li>To find a reframe: think about your qualities, strengths, or past achievements that make you feel more powerful to move towards the vision you have for your life and future.</li>
+<li>Looking closer at your Tree of Life can reveal many strengths and experiences that give you power to move towards your hopes and dreams (buds).</li>
+</ul></div></aside></section><section class="content-block type-facilitation-tip facilitator-note"><h3>Examples: LB → Reframe</h3><h3>Limiting Belief (Self-doubt) / Reframe (Positive Truth about You)</h3>
+<p>LIMITING BELIEF: Because I have children and don't have much money, I will never be able to go to university.</p>
+<p>--&gt; REFRAME: If it's important to me, I will keep looking for opportunities to learn. I can also take shorter courses that I'm able to afford.</p>
+<hr />
+<p>LIMITING BELIEF: I can't reach my big savings goals.</p>
+<p>--&gt; REFRAME: I can save small amounts now and over time my savings will grow.</p>
+<hr />
+<p>LIMITING BELIEF: I tried to start a business, but it was a failure. I don't want to fail again.</p>
+<p>--&gt; REFRAME: Every time I fail, I learn something new. It makes me stronger and wiser to try again.</p>
+<hr />
+<p>LIMITING BELIEF: I am not smart enough to understand how to run a business.</p>
+<p>--&gt; REFRAME: I've learned to do many things, I can learn this too.</p>
+<hr />
+<p>LIMITING BELIEF: I have nothing of value to give to others.</p>
+<p>--&gt; REFRAME: I have been helpful to other people in the past.</p>
+<hr />
+<p>LIMITING BELIEF: I've never met any female electricians, so I won't be able to succeed in my electronics repair business.</p>
+<p>--&gt; REFRAME: Even though I haven't met other female electricians, I have the passion, skills and abilities to do the job well. I also have people I can ask for support when I need.</p>
+<hr /></section><section class="content-block type-facilitation-tip facilitator-note"><h3>Limiting Beliefs Explainer Video &amp; reflection</h3><p><strong>Limiting Beliefs Animated Video</strong></p>
+<p>This video is here as a reference for you when if you need a reminder on the topic of Limiting Beliefs and Reframes. You can also use this video during trainings to help explain the concepts to trainees through a different medium. </p>
+<p>https://drive.google.com/file/d/1ZZqzq-Q-1kRjjqbmneCeWMEyr4uDB5KI/preview</p></section><section class="content-block type-knowledge-check"><h3>📝 Knowledge Check: 3.1.3 – Elephant Story (Pt 2) - Reframes</h3><ol class="kc-questions"><li><p></p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p></p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>If someone shares a limiting belief with you, how would you help them to find a good reframe to move forward?</p><ul class="kc-options"><li><span class="option-box" aria-hidden="true"></span> Make up a reframe on the spot, even if you&#x27;re not fully sure it&#x27;s honest</li><li><span class="option-box" aria-hidden="true"></span> Turn the question back to the group — ask if anyone has a strength or story that challenges that belief — rather than supplying an answer yourself</li><li><span class="option-box" aria-hidden="true"></span> Tell the participant that&#x27;s not something you can help with right now</li><li><span class="option-box" aria-hidden="true"></span> Skip past it and move to the next agenda item</li></ul></li><li><p>Your Ropes &amp; Reflections (part 3/3):
+Choose a Reframe, looking at your Trunk or Fruits or other experience.
+i.e. What else do you know about yourself that makes it feel possible?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>Your Ropes &amp; Reflections (part 2/3):
+Find a Limiting Belief around this.
+(i.e. What do you believe about yourself that makes you doubt it)</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>Your Ropes &amp; Reflections (part 1/3):
+Choose a vision, goal, or “bud” on your tree of life
+i.e. What is something you really want to see happen in your life?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>After identifying their limiting beliefs successfully, your trainees are now working on creating a reframe for themselves. One of your trainees identified their limiting belief as “ I’m no good at public speaking - no one will ever listen to what I have to say”. This has limited their ability to talk with other leaders in the community and learn techniques for farming. This trainee comes to you with their reframe: “I’m a good communicator and people will listen to me.”. However, when speaking this reframe aloud, they do not feel strengthened by it. How would you help coach them to a better reframe that felt better for them?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>A trainee approaches you while working on identifying their limiting belief. They are having trouble identifying their own limiting beliefs. So far, they have written down “I’ll never get a promotion at work”. They feel like this limiting belief doesn’t capture what they’re really feeling. What would you say or ask to try to help them?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>What do you think are the important messages of the Elephant story?</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li><li><p>Put these facilitator actions in order:
+A. Debrief Elephant Story Part 1 (&quot;What is the moral of the story?&quot;)
+B. Lead the &quot;I am stupid&quot; / &quot;I am strong&quot; group experiment
+C. Share Elephant Story Part 2 (Reframes) and debrief
+D. Reference the Limiting-Belief-to-Reframe examples table</p><ul class="kc-options"><li><span class="option-box" aria-hidden="true"></span> B → A → C → D</li><li><span class="option-box" aria-hidden="true"></span> A → B → C → D</li><li><span class="option-box" aria-hidden="true"></span> B → C → A → D</li><li><span class="option-box" aria-hidden="true"></span> D → B → A → C</li></ul></li><li><p>Have you pre-selected examples for a group before, or does this feel like an extra prep step you&#x27;d be tempted to skip under time pressure? Be honest with yourself about whether you&#x27;d actually do this step, and if not, what would make it easier to actually do.</p><div class="writing-box"><span class="writing-box-label">Your answer</span><div class="writing-box-lines" aria-hidden="true"></div></div></li></ol></section></article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>SEE Change Initiative · Johns Hopkins Bloomberg School of Public Health</p>
+  </div>
+</footer>
+</body>
+</html>
