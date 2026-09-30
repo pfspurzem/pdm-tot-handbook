@@ -1,0 +1,13 @@
+name = "pdm-qr-redirect"
+main = "src/index.js"
+compatibility_date = "2026-09-29"
+
+# Created once via `wrangler kv:namespace create SCAN_COUNTS` — paste the
+# id it prints below. Redirects work without this bound; only /_stats needs it.
+kv_namespaces = [
+  { binding = "SCAN_COUNTS", id = "REPLACE_WITH_KV_NAMESPACE_ID" }
+]
+
+# Secrets (STATS_SECRET, POSTHOG_API_KEY, POSTHOG_HOST) are set with
+# `wrangler secret put <NAME>`, never written here — this file is committed
+# to the repo and anything in [vars] would be plaintext in git history.

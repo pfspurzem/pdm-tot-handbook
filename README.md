@@ -37,3 +37,11 @@ See `BRAND_GUIDELINES.md` for the SEE Change color palette, typography (Oswald/Q
 ## Repo secrets
 
 - `CODA_API_KEY` — a Coda personal API token with read access to the PDM ToT Pilot doc. Set under Settings → Secrets and variables → Actions.
+
+## QR codes for printed media
+
+Video/audio assets that can't go on paper directly (currently the Elephant
+Story clips and the Limiting Beliefs video, all Google Drive-hosted) get a
+printed QR code that points at a small Cloudflare Worker rather than at the
+Drive link itself, so scans can be counted and destinations repointed
+without reprinting. See `worker/README.md`.
