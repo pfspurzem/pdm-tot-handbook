@@ -24,6 +24,7 @@ import os
 import re
 import ssl
 import sys
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -46,7 +47,6 @@ TABLES = {
     "activities": "grid-NUOItFXygE",
     "blocks": "grid-mS2cmY619v",
     "kc_bank": "grid-yX0FdYPHaY",
-    "media": "grid-dpKyyG3uJf",
 }
 
 # Column IDs (from the Coda doc's schema -- see BRAND_GUIDELINES.md's sibling
@@ -67,19 +67,18 @@ C_BLK_BODY_TEXT = "c-FLnOinMGz-"
 C_BLK_INCLUDE = "c-5SoBfGZYag"
 C_BLK_ORDER_NUM = "c-eYc4nQdZ8f"
 C_BLK_SHOW_WRITING = "c-0mjVl5DBg5"
-C_BLK_MEDIA = "c-8nlZzLQe5M"
 
 C_KC_QUESTION = "c-M5dESzdlgX"
 C_KC_ACTIVITY = "c-rXMeov530v"
 C_KC_ORDER = "c-Fx3bn8kghS"
 C_KC_OPTIONS = "c-KYUiO5a0Hv"
 
-C_MEDIA_NAME = "c-QgVj7N6ruh"
-C_MEDIA_TYPE = "c-u0u9WkDSHo"
-C_MEDIA_ALT = "c-0-KxSOyW6l"
-C_MEDIA_CAPTION = "c-ANKI_stJyt"
-C_MEDIA_URL = "c-kmp4N9oyv9"
-C_MEDIA_PRINT_LINK = "c-cSizLiCuEJ"
+# Media (images/audio/video) is no longer a separate Media Assets lookup --
+# team members embed it directly in Body Markdown as `![caption](url)`
+# (2026-10-01). See classify_embed_url/EMBED_RE below. The Content Blocks
+# "...Media Assets" column and the Media Assets table were removed from Coda
+# as part of this same change -- don't reintroduce a C_BLK_MEDIA/C_MEDIA_*
+# constant without also re-adding that column.
 
 # Lessons published so far. A lesson can only be added here once every non-Knowledge-Check
 # block under it (with PDM ToT Include? = true) has a real Body Markdown snapshot --
@@ -136,20 +135,98 @@ CALLOUT_RE = re.compile(r'<callout type="(?P<type>[^"]+)">\s*(?P<body>.*?)\s*</c
 
 CALLOUT_ICON = {"note": "📝", "info": "ℹ️", "tip": "💡", "warning": "⚠️"}
 
+# Simple embeds: a team member types `![caption](url)` directly into Body
+# Markdown (2026-10-01) instead of creating a Media Assets row -- that table
+# and the Content Blocks lookup to it are gone. True images render inline
+# via the standard markdown image syntax (untouched here); audio/video is
+# intercepted and rendered as a link + QR code instead, since embedding an
+# audio/video URL as <img> would just show a broken image icon.
+EMBED_RE = re.compile(r'!\[(?P<alt>[^\]]*)\]\((?P<url>https?://[^\s)]+)\)')
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp"}
+AUDIO_EXTENSIONS = {".mp3", ".wav", ".m4a", ".ogg", ".aac", ".flac"}
+VIDEO_EXTENSIONS = {".mp4", ".mov", ".webm", ".avi", ".mkv"}
+VIDEO_DOMAINS = {"youtube.com", "youtu.be", "vimeo.com"}
+
+
+def classify_embed_url(url: str) -> str:
+    """'image', 'audio', or 'video' for a `![alt](url)` simple embed. File
+    extension first, then known video host, else defaults to 'image' -- the
+    literal reading of markdown's image syntax (e.g. a Google Drive share
+    link has no extension to go on). Mirrors the same convention used in the
+    PDM ToT Google Doc export script, for consistency across both pipelines.
+    """
+    parsed = urllib.parse.urlparse(url)
+    ext = Path(parsed.path.lower()).suffix
+    if ext in AUDIO_EXTENSIONS:
+        return "audio"
+    if ext in VIDEO_EXTENSIONS:
+        return "video"
+    if ext in IMAGE_EXTENSIONS:
+        return "image"
+    if any(d in parsed.netloc.lower() for d in VIDEO_DOMAINS):
+        return "video"
+    return "image"
+
+
+def qr_code_url(target_url: str, size: int = 200) -> str:
+    return (
+        "https://api.qrserver.com/v1/create-qr-code/"
+        f"?size={size}x{size}&data={urllib.parse.quote(target_url, safe='')}"
+    )
+
+
+def media_link_html(alt: str, url: str, kind: str) -> str:
+    # Inline elements only (span + img, no p/div) -- an embed can land either
+    # on its own line (becomes the sole content of a paragraph, then unwrapped
+    # by _unwrap_placeholders) or mid-sentence (stays nested inside a real
+    # <p>...</p> alongside surrounding text). A block-level replacement broke
+    # the mid-sentence case (invalid <p> nested in <p>); this is valid either
+    # way. CSS gives .media-qr display:block so it still reads as its own row.
+    label = "Listen" if kind == "audio" else "Watch"
+    text = alt or f"{label} this {kind}"
+    qr = qr_code_url(url)
+    return (
+        '<span class="media-link">🔗 '
+        f'<a href="{html.escape(url)}">{label}: {html.escape(text)}</a></span>'
+        f'<img class="media-qr" src="{html.escape(qr)}" alt="QR code: {html.escape(text)}" loading="lazy">'
+    )
+
 
 def render_markdown(text: str) -> str:
-    """Body Markdown -> HTML. Handles our one custom construct (<callout>) by
-    rendering its inner markdown separately and wrapping the result in a
-    semantic <aside>, then running the standard markdown converter (headings,
-    bold, italic, lists, links, images, hr) on everything else."""
+    """Body Markdown -> HTML. Handles our custom <callout> construct and
+    audio/video simple embeds by stashing their rendered HTML behind a
+    placeholder token, running the standard markdown converter (headings,
+    bold, italic, lists, links, true images, hr) on everything else, then
+    restoring the stashed HTML. A true image embed is left for markdown's
+    own native image syntax to handle."""
     if not text or not text.strip():
         return ""
 
     placeholders: list[str] = []
 
+    def _unwrap_placeholders(html_in: str) -> str:
+        # markdown wraps a block-level placeholder token in <p>...</p> since
+        # it looked like inline text; unwrap so the <aside>/<img> (which may
+        # itself be or contain a block element) isn't invalidly nested in a <p>.
+        return re.sub(r"<p>\s*(\x00(?:CALLOUT|MEDIA)\d+\x00)\s*</p>", r"\1", html_in)
+
+    def _stash_media(m: re.Match) -> str:
+        kind = classify_embed_url(m.group("url"))
+        if kind == "image":
+            return m.group(0)  # leave as-is for markdown's native ![]() handling
+        placeholders.append(media_link_html(m.group("alt"), m.group("url"), kind))
+        return f"\x00MEDIA{len(placeholders) - 1}\x00"
+
     def _stash_callout(m: re.Match) -> str:
         ctype = m.group("type")
-        inner_html = md.markdown(m.group("body"), extensions=["sane_lists", "tables"])
+        inner_source = EMBED_RE.sub(_stash_media, m.group("body"))
+        inner_html = md.markdown(inner_source, extensions=["sane_lists", "tables"])
+        inner_html = _unwrap_placeholders(inner_html)
+        # Resolve any media placeholder nested inside this callout right away --
+        # a single outer re.sub pass later won't recurse into this callout's own
+        # stored HTML, so an unresolved \x00MEDIA..\x00 token would otherwise
+        # survive verbatim into the final page.
+        inner_html = re.sub(r"\x00MEDIA(\d+)\x00", lambda mm: placeholders[int(mm.group(1))], inner_html)
         # Demote heading levels inside the callout by one, so a "###" written
         # inside <callout> (h3) nests correctly under the block's own h3 title.
         for level in (3, 2, 1):
@@ -163,16 +240,14 @@ def render_markdown(text: str) -> str:
         return f"\x00CALLOUT{len(placeholders) - 1}\x00"
 
     without_callouts = CALLOUT_RE.sub(_stash_callout, text)
-    body_html = md.markdown(without_callouts, extensions=["sane_lists", "tables"])
+    without_media = EMBED_RE.sub(_stash_media, without_callouts)
+    body_html = md.markdown(without_media, extensions=["sane_lists", "tables"])
 
     def _restore(m: re.Match) -> str:
         return placeholders[int(m.group(1))]
 
-    # markdown wraps our block-level placeholder token in <p>...</p> since it
-    # looked like inline text; unwrap that paragraph so the <aside> (which
-    # itself contains block elements) isn't invalidly nested inside a <p>.
-    body_html = re.sub(r"<p>\s*(\x00CALLOUT\d+\x00)\s*</p>", r"\1", body_html)
-    return re.sub(r"\x00CALLOUT(\d+)\x00", _restore, body_html)
+    body_html = _unwrap_placeholders(body_html)
+    return re.sub(r"\x00(?:CALLOUT|MEDIA)(\d+)\x00", _restore, body_html)
 
 
 def canvas_fallback_to_html(flat_text: str) -> str:
@@ -215,33 +290,7 @@ def render_kc_block(activity_name: str, kc_rows: list[dict]) -> str:
     return f'<ol class="kc-questions">{"".join(items)}</ol>'
 
 
-def media_html(media_names: str, media_by_name: dict) -> str:
-    if not media_names or not str(media_names).strip():
-        return ""
-    out = []
-    for name in str(media_names).split(","):
-        name = name.strip()
-        asset = media_by_name.get(name)
-        if not asset:
-            continue
-        url = str(val(asset, C_MEDIA_URL, "")).strip() or str(val(asset, C_MEDIA_PRINT_LINK, "")).strip()
-        if not url:
-            continue
-        alt = html.escape(str(val(asset, C_MEDIA_ALT, name)))
-        caption = str(val(asset, C_MEDIA_CAPTION, "")).strip()
-        mtype = str(val(asset, C_MEDIA_TYPE, "")).strip()
-        if mtype == "Image":
-            fig = f'<img src="{html.escape(url)}" alt="{alt}" loading="lazy">'
-            if caption:
-                fig = f'<figure>{fig}<figcaption>{html.escape(caption)}</figcaption></figure>'
-            out.append(fig)
-        else:
-            label = "Listen" if mtype == "Audio" else "Watch"
-            out.append(f'<p class="media-link">🔗 <a href="{html.escape(url)}">{label}: {html.escape(caption or name)}</a></p>')
-    return "\n".join(out)
-
-
-def render_block(block: dict, kc_rows: list[dict], media_by_name: dict) -> str:
+def render_block(block: dict, kc_rows: list[dict]) -> str:
     btype = str(val(block, C_BLK_TYPE, "")).strip()
     title = str(val(block, C_BLK_TITLE, "")).strip()
     # Block titles already carry their own author-chosen emoji (📘, 👤, 🔑, ...)
@@ -249,7 +298,8 @@ def render_block(block: dict, kc_rows: list[dict], media_by_name: dict) -> str:
     # content type is instead distinguished by the type-* CSS class below.
     heading = f"<h3>{html.escape(title)}</h3>" if title else ""
 
-    media = media_html(val(block, C_BLK_MEDIA, ""), media_by_name)
+    # Media is no longer a separate lookup -- it's embedded directly in the
+    # body as `![caption](url)` and handled inside render_markdown itself.
 
     if btype == "Knowledge Check":
         activity_name = str(val(block, C_BLK_ACTIVITY, "")).strip()
@@ -275,7 +325,7 @@ def render_block(block: dict, kc_rows: list[dict], media_by_name: dict) -> str:
 
     return (
         f'<section class="content-block {type_class}{facilitator_class}">'
-        f"{heading}{media}{body}{extra_box}</section>"
+        f"{heading}{body}{extra_box}</section>"
     )
 
 
@@ -334,8 +384,6 @@ def build():
     activities = fetch_all_rows(TABLES["activities"])
     blocks = fetch_all_rows(TABLES["blocks"])
     kc_rows = fetch_all_rows(TABLES["kc_bank"])
-    media_rows = fetch_all_rows(TABLES["media"])
-    media_by_name = {str(val(r, C_MEDIA_NAME, "")).strip(): r for r in media_rows}
 
     lessons_by_name = {str(val(r, C_LESSON_NAME)): r for r in lessons}
     published = [name for name in LESSON_ALLOWLIST if name in lessons_by_name]
@@ -374,7 +422,7 @@ def build():
                 continue
             act_id = slugify(act_name)
             nav_items.append(f'<li><a href="#{act_id}">{html.escape(act_name)}</a></li>')
-            rendered_blocks = "".join(render_block(b, kc_rows, media_by_name) for b in act_blocks)
+            rendered_blocks = "".join(render_block(b, kc_rows) for b in act_blocks)
             sections.append(
                 f'<article class="activity" id="{act_id}"><h2>{html.escape(act_name)}</h2>{rendered_blocks}</article>'
             )
