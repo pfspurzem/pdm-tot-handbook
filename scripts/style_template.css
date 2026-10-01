@@ -177,6 +177,14 @@ main { padding: 1.5rem 1.1rem 4rem; }
   margin-top: 0.4em;
 }
 .media-link a { font-weight: 500; }
+.media-qr {
+  display: block;
+  width: 140px;
+  height: 140px;
+  margin: 0.5em 0 1em;
+  border-radius: var(--radius);
+  border: 1px solid var(--blue-light);
+}
 
 /* Any raw table that arrives via source markdown (e.g. pasted from a Coda
    canvas) -- without this, it falls back to bare browser/Coda default
